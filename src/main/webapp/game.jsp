@@ -1,4 +1,4 @@
-<%@ taglib uri="http://jakarta.apache.org/taglibs/standard-1.2" prefix="c" %>
+
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!DOCTYPE html>
 <html>
