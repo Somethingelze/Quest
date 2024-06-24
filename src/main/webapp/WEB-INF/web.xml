@@ -5,11 +5,10 @@
   <display-name>Text Adventure Game</display-name>
   <servlet>
     <servlet-name>GameServlet</servlet-name>
-    <servlet-class>com.example.textadventure.controller.GameServlet</servlet-class>
+    <servlet-class>com.textAdventure.controller.GameServlet</servlet-class>
   </servlet>
   <servlet-mapping>
     <servlet-name>GameServlet</servlet-name>
     <url-pattern>/game</url-pattern>
   </servlet-mapping>
-
 </web-app>

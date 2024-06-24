@@ -1,44 +1,40 @@
-package com.textAdventure.controller;
-
-import com.textAdventure.model.Game;
+package com.textadventure.controller;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import com.textAdventure.model.Game;
 
 import java.io.IOException;
 
-@WebServlet("/game")
+// Убедитесь, что аннотация @WebServlet удалена, так как мы будем использовать web.xml для настройки
 public class GameServlet extends HttpServlet {
-    private static final long serialVersionUID = 1L;
-
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        Game game = (Game) request.getSession().getAttribute("game");
-        if (game == null) {
-            game = new Game();
-            request.getSession().setAttribute("game", game);
-        }
-        request.getRequestDispatcher("/game.jsp").forward(request, response);
+    @Override
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        Game game = new Game();
+        req.getSession().setAttribute("game", game);
+        req.getRequestDispatcher("/WEB-INF/game.jsp").forward(req, resp);
     }
 
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        Game game = (Game) request.getSession().getAttribute("game");
+    @Override
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        Game game = (Game) req.getSession().getAttribute("game");
         if (game == null) {
-            game = new Game();
-            request.getSession().setAttribute("game", game);
+            resp.sendRedirect("game");
+            return;
         }
 
-        String choice = request.getParameter("choice");
+        String choice = req.getParameter("choice");
         if (choice != null) {
             game.nextStep(choice);
         }
 
         if (game.isFinished()) {
-            request.getRequestDispatcher("/result.jsp").forward(request, response);
+            req.getRequestDispatcher("/WEB-INF/result.jsp").forward(req, resp);
         } else {
-            request.getRequestDispatcher("/game.jsp").forward(request, response);
+            req.getRequestDispatcher("/WEB-INF/game.jsp").forward(req, resp);
         }
     }
 }
